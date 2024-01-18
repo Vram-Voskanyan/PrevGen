@@ -42,7 +42,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     DemoApplicationTheme {
-        Greeting(aClassPreview.b.toString())
+        Greeting("Hello Jetpack")
     }
 }
 
