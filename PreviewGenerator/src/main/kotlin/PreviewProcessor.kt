@@ -5,13 +5,6 @@ import generatorengine.NameGeneratorEngine
 import generatorengine.NameGeneratorEngineV1
 import java.io.OutputStream
 
-// Git upload
-// mavenPublish
-// enum, non-dataClass
-// readme?
-// map?
-// annotation Values, length, custom field
-// file read?
 
 fun OutputStream.appendText(str: String) {
     this.write(str.toByteArray())
@@ -47,33 +40,9 @@ class PreviewProcessor(
             )
             file.appendText("package $packageName\n\n")
             file.appendText("val ${className.replaceFirstChar { className.lowercase()[0] }}Preview = $className(\n")
-            generateValues(file, function.parameters)
+            generatorEngine.generateValues(file, function.parameters)
             file.close()
         }
-
-        private fun generateValues(file: OutputStream, parameters: List<KSValueParameter>) {
-            parameters.forEach {
-                val name = it.name!!.asString()
-                val typeResolve = it.type.resolve().declaration
-                if (typeResolve is KSClassDeclaration && isDataClass(typeResolve)) {
-                    file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
-                    generateValues(file, typeResolve.primaryConstructor!!.parameters)
-                    file.appendText(",\n")
-                } else {
-                    val typeName = StringBuilder(
-                        it.type.resolve().declaration.qualifiedName?.asString() ?: "<ERROR>"
-                    )
-                    file.appendText( generatorEngine.generateValueByType(typeName.toString(), name))
-                }
-            }
-            file.appendText(")")
-        }
-    }
-
-    private fun isDataClass(classDeclaration: KSDeclaration): Boolean {
-        return classDeclaration is KSClassDeclaration &&
-                classDeclaration.classKind == ClassKind.CLASS &&
-                classDeclaration.modifiers.contains(Modifier.DATA)
     }
 
 }

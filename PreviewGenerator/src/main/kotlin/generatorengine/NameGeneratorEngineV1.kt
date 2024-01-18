@@ -1,8 +1,15 @@
 package generatorengine
 
+import appendText
+import com.google.devtools.ksp.symbol.ClassKind
+import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSDeclaration
+import com.google.devtools.ksp.symbol.KSValueParameter
+import com.google.devtools.ksp.symbol.Modifier
+import java.io.OutputStream
 import kotlin.random.Random
 
-class NameGeneratorEngineV1: NameGeneratorEngine {
+class NameGeneratorEngineV1 : NameGeneratorEngine {
     // can be added extra config for future. if needed huge data to test.
     private val longMaxRange: Long = 10000
     private val randomStringMin = 4
@@ -20,6 +27,10 @@ class NameGeneratorEngineV1: NameGeneratorEngine {
             "kotlin.collections.List" -> "\t$key = emptyList(),\n"
             else -> "\t$key = null,\n"
         }
+
+    override fun generateValues(file: OutputStream, parameters: List<KSValueParameter>) {
+        detectAndGenerateValues(file, parameters)
+    }
 
     override fun generateLong(key: String): Long {
         if (check(dateKeys, key.lowercase())) {
@@ -55,6 +66,31 @@ class NameGeneratorEngineV1: NameGeneratorEngine {
         val length = Random.nextInt(randomStringMin, randomStringMax) // Adjust the range as needed
         val chars = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         return (1..length).map { chars.random() }.joinToString("")
+    }
+
+
+    private fun detectAndGenerateValues(file: OutputStream, parameters: List<KSValueParameter>) {
+        parameters.forEach {
+            val name = it.name!!.asString()
+            val typeResolve = it.type.resolve().declaration
+            if (typeResolve is KSClassDeclaration && isDataClass(typeResolve)) {
+                file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
+                detectAndGenerateValues(file, typeResolve.primaryConstructor!!.parameters)
+                file.appendText(",\n")
+            } else {
+                val typeName = StringBuilder(
+                    it.type.resolve().declaration.qualifiedName?.asString() ?: "<ERROR>"
+                )
+                file.appendText(generateValueByType(typeName.toString(), name))
+            }
+        }
+        file.appendText(")")
+    }
+
+    private fun isDataClass(classDeclaration: KSDeclaration): Boolean {
+        return classDeclaration is KSClassDeclaration &&
+                classDeclaration.classKind == ClassKind.CLASS &&
+                classDeclaration.modifiers.contains(Modifier.DATA)
     }
 
 }
