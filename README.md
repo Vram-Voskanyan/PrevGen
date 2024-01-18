@@ -56,7 +56,19 @@ val previewValue = dummyClassPreview
 // dummyClassPreview is a generated class which is: DummyClass(name = "Ryan", age = 85, loginDate = 1705600601029)
 // Note: `loginDate` is a Timestamp ;)
 ```
+
+### Example for Jetpack Compose
+TODO: soon ;)
+
 ## Roadmap
+
+Since this project was developed only during non-office hours, not everything is covered. For example, the following types are not currently supported: Non-Data classes, Enum, Map, List (in progress).
+
+We also have some exciting features in mind for implementation, depending on community interest:
+
+1. **Customized Data Size:** Introduce an option to edit the generated data size for checking how the view behaves with large or small datasets. This may involve adding a parameter option to annotations.
+
+2. **Flexible Data Generation:** Currently, the generator relies on an argument name-checker to pick values close to the parameter type. For the next step, we aim to provide an option to pass values from outside, allowing customization such as non-English values.
 
 ## License
 
