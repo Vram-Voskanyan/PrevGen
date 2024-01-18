@@ -1,5 +1,5 @@
 *.iml
-gradle.properties
+/gradle.properties
 .gradle
 /local.properties
 /.idea/caches
