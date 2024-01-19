@@ -6,8 +6,10 @@ Kotlin PreviewGenerator is a lightweight compiler plugin written with Kotlin Sym
 - [Setup](#setup)
 - [Usage](#usage)
 - [Examples](#examples)
-- [Roadmap](#roadmap)
+- [Roadmap](#ongoing-and-future-works)
+- [Feedback and contact us](#)
 - [License](#license)
+- [Contribute](#contributing)
 
 ## Setup
 
@@ -60,7 +62,7 @@ val previewValue = dummyClassPreview
 ### Example for Jetpack Compose
 TODO: soon ;)
 
-## Roadmap
+## Ongoing and Future Works
 
 Since this project was developed only during non-office hours, not everything is covered. For example, the following types are not currently supported: Non-Data classes, Enum, Map, List (in progress).
 
@@ -70,6 +72,17 @@ We also have some exciting features in mind for implementation, depending on com
 
 2. **Flexible Data Generation:** Currently, the generator relies on an argument name-checker to pick values close to the parameter type. For the next step, we aim to provide an option to pass values from outside, allowing customization such as non-English values.
 
+## Contact Author 
+
+- (email)[vram.arm@gmail.com]
+- (Linkedin)[https://www.linkedin.com/in/vram-voskanyan-146b6198/]
+
 ## License
 
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+## Contributing
+
+If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.
+When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible.
+
