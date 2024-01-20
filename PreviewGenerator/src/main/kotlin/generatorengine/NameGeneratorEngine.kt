@@ -8,6 +8,6 @@ interface NameGeneratorEngine {
     fun generateString(key: String): String
     fun generateBoolean(key: String): Boolean
     fun generateInt(key: String): Int
-    fun generateValueByType(type: String, key: String): String
+    fun generateValueByType(ksValueParameter: KSValueParameter, type: String, key: String): String
     fun generateValues(file: OutputStream, parameters: List<KSValueParameter>)
 }

@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import am.vram.demoapplication.ui.theme.DemoApplicationTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android Hello")
+                    Greeting("Android")
                 }
             }
         }
@@ -31,11 +34,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+    Column(Modifier.padding(8.dp)) {
+        Text(text = "Hello $name!", modifier = modifier)
+        HistoryCard(paymentHistoryItem = paymentHistoryItemPreview.also { it.generateDate() }) { }
+    }
 }
 
 @Preview(showBackground = true)

@@ -16,71 +16,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HistoryCard(priceHistoryItem: PriceHistoryItem, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .padding(vertical = 4.dp, horizontal = 4.dp)
-            .clickable(onClick = onClick)
-    ) {
+fun HistoryCard(paymentHistoryItem: PaymentHistoryItem, onClick: () -> Unit) {
+    Card(modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp).clickable(onClick = onClick)) {
         Column(Modifier.padding(8.dp)) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(2.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "From: ${priceHistoryItem.fromUser.name}"
-                )
-                Text(
-                    text = "Status: ${priceHistoryItem.type}"
-                )
+            Row(Modifier.fillMaxWidth().padding(2.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(text = "From: ${paymentHistoryItem.fromUser.name}")
+                Text(text = "Status: ${paymentHistoryItem.status}")
             }
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "to: ${priceHistoryItem.toUser.name}"
-                )
-                Text(
-                    text = "Amount: ${priceHistoryItem.amount}"
-                )
+            Row(Modifier.fillMaxWidth().padding(4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(text = "to: ${paymentHistoryItem.toUser.name}")
+                Text(text = "Amount: ${paymentHistoryItem.amount}")
             }
             Divider(thickness = 1.dp, color = Color.Gray)
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(2.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "Date: ${priceHistoryItem.dateString}")
-                Text(text = "Balance: ${priceHistoryItem.currentBalance}")
+            Row(Modifier.fillMaxWidth().padding(2.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(text = "Date: ${paymentHistoryItem.dateString}")
+                Text(text = "Balance: ${paymentHistoryItem.currentBalance}")
             }
         }
-
     }
 }
 
-
 @Preview
-//@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultPreview() {
-    HistoryCard(priceHistoryItem = createTestData()) {}
+fun HistoryCardPreview() {
+    HistoryCard(paymentHistoryItem = createTestData()) {}
 }
 
 @Preview
-//@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultPreview2() {
-    HistoryCard(priceHistoryItem = priceHistoryItemPreview.also { it.generateDate() }) {}
+fun HistoryCardPreviewWithPrevGen() {
+    HistoryCard(paymentHistoryItem = paymentHistoryItemPreview.also { it.generateDate() }) {}
 }
 
-fun createTestData() : PriceHistoryItem {
-    val fromUserA = FromUser(
+fun createTestData() : PaymentHistoryItem {
+    val fromUserA = User(
         _id = "user123",
         fullName = "John Doe",
         hasProducts = true,
@@ -91,7 +60,7 @@ fun createTestData() : PriceHistoryItem {
         username = "johndoe"
     )
 
-    val toUserB = ToUser(
+    val toUserB = User(
         _id = "user456",
         fullName = "Jane Smith",
         hasProducts = false,
@@ -102,7 +71,7 @@ fun createTestData() : PriceHistoryItem {
         username = "janesmith"
     )
 
-    return PriceHistoryItem(
+    return PaymentHistoryItem(
         _id = "abc123",
         amount = 100,
         currentBalance = 500,
@@ -111,7 +80,7 @@ fun createTestData() : PriceHistoryItem {
         id = "def456",
         oldBalance = 400,
         toUser = toUserB,
-        type = "credit"
+        status = "credit"
     ).apply { generateDate() }
 }
 

@@ -5,16 +5,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @DataPreview
-data class PriceHistoryItem(
+data class PaymentHistoryItem(
     val _id: String,
     val amount: Int,
     val currentBalance: Int,
     val date: Long,
-    val fromUser: FromUser,
+    val fromUser: User,
     val id: String,
     val oldBalance: Int,
-    val toUser: ToUser,
-    val type: String = "aaa"
+    val toUser: User,
+    val status: String = ""
 ) {
     var dateString = ""
         private set
@@ -29,18 +29,7 @@ data class PriceHistoryItem(
     }
 }
 
-data class FromUser(
-    val _id: String,
-    val fullName: String,
-    val hasProducts: Boolean,
-    val id: String,
-    val location: Location,
-    val name: String,
-    val surname: String,
-    val username: String
-)
-
-data class ToUser(
+data class User(
     val _id: String,
     val fullName: String,
     val hasProducts: Boolean,

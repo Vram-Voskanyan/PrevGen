@@ -16,20 +16,98 @@ class NameGeneratorEngineV1 : NameGeneratorEngine {
     private val randomStringMax = 10
     private val randomIntMin = 100
     private val randomIntMax = 1000
+    private val listElementsMaxCount = 5
 
+    override fun generateValues(file: OutputStream, parameters: List<KSValueParameter>) {
+        parameters.forEach {
+            getValueAndGeneratePreview(it, file)
+        }
+        file.appendText(")")
+    }
 
-    override fun generateValueByType(type: String, key: String): String =
+    private fun getValueAndGeneratePreview(ksValueParameter: KSValueParameter, file: OutputStream) {
+        val name = ksValueParameter.name!!.asString()
+        val typeResolve = ksValueParameter.type.resolve().declaration
+        // Data class class
+        if (typeResolve is KSClassDeclaration && isDataClass(typeResolve)) {
+            file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
+            generateValues(file, typeResolve.primaryConstructor!!.parameters)
+            file.appendText(",\n")
+        } else {
+            val typeName = StringBuilder(
+                ksValueParameter.type.resolve().declaration.qualifiedName?.asString() ?: "<ERROR>"
+            )
+            // list, in future generic base type
+            if (typeName.toString() == "kotlin.collections.List") {
+                // is generic type a Custom class
+                val typeArgs = ksValueParameter.type.element!!.typeArguments
+                typeArgs.firstOrNull { typeArg ->
+                    val subTypeResolve = typeArg.type?.resolve()?.declaration
+
+                    if (subTypeResolve is KSClassDeclaration && isDataClass(subTypeResolve)) {
+                        file.appendText("\t$name = listOf(\n")
+
+                        repeat(Random.nextInt(1, listElementsMaxCount)) {
+                            file.appendText("${subTypeResolve.simpleName.asString()}(\n")
+                            generateValues(file, subTypeResolve.primaryConstructor!!.parameters)
+                            file.appendText(",\n")
+                        }
+                        file.appendText("),\n")
+                    } else {
+                        file.appendText(
+                            "\t$name = listOf(${generateListItems(ksValueParameter)}),\n"
+                        )
+                    }
+                    false
+                }
+            } else {
+                file.appendText(generateValueByType(ksValueParameter, typeName.toString(), name))
+            }
+        }
+    }
+
+    override fun generateValueByType(
+        ksValueParameter: KSValueParameter,
+        type: String,
+        key: String
+    ): String =
         when (type) {
             "kotlin.String" -> "\t$key = \"${generateString(key)}\",\n"
             "kotlin.Int" -> "\t$key = ${generateInt(key)},\n"
             "kotlin.Boolean" -> "\t$key = ${generateBoolean(key)},\n"
             "kotlin.Long" -> "\t$key = ${generateLong(key)},\n"
-            "kotlin.collections.List" -> "\t$key = emptyList(),\n"
             else -> "\t$key = null,\n"
         }
 
-    override fun generateValues(file: OutputStream, parameters: List<KSValueParameter>) {
-        detectAndGenerateValues(file, parameters)
+    private fun generateListItems(ksValueParameter: KSValueParameter): String {
+        val type = getGenericValueByType(ksValueParameter)
+        var result = ""
+        when (type) {
+            "kotlin.String" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
+                result+="\"${generateString("")}\",\n"
+            }
+            "kotlin.Int" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
+                result+="${generateInt("")},\n"
+            }
+            "kotlin.Boolean" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
+                result+= "${generateBoolean("")},\n"
+            }
+            "kotlin.Long" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
+                result+="${generateLong("")},\n"
+            }
+            else -> "\nnull\n"
+        }
+        return result
+    }
+
+    private fun getGenericValueByType(ksValueParameter: KSValueParameter): String {
+        val typeArgs = ksValueParameter.type.element!!.typeArguments
+        if (typeArgs.isNotEmpty()) {
+            typeArgs.firstOrNull {
+                return it.type?.resolve()?.declaration?.qualifiedName?.asString() ?: "ERROR"
+            }
+        }
+        return "ERROR"
     }
 
     override fun generateLong(key: String): Long {
@@ -51,8 +129,10 @@ class NameGeneratorEngineV1 : NameGeneratorEngine {
     }
 
     override fun generateInt(key: String): Int =
-        if (check(ageKeys, key)) Random.nextInt(10, 88) else {
-            Random.nextInt(randomIntMin, randomIntMax) //todo move to top
+        if (check(ageKeys, key)) {
+            Random.nextInt(10, 88)
+        } else {
+            Random.nextInt(randomIntMin, randomIntMax)
         }
 
     private fun check(fingerprintTypes: Set<String>, fingerprint: String): Boolean {
@@ -62,35 +142,15 @@ class NameGeneratorEngineV1 : NameGeneratorEngine {
 
     private fun getRandomFromList(list: List<String>): String = list[Random.nextInt(0, list.size)]
 
-    private fun generateRandomString(): String {
-        val length = Random.nextInt(randomStringMin, randomStringMax) // Adjust the range as needed
-        val chars = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        return (1..length).map { chars.random() }.joinToString("")
-    }
-
-
-    private fun detectAndGenerateValues(file: OutputStream, parameters: List<KSValueParameter>) {
-        parameters.forEach {
-            val name = it.name!!.asString()
-            val typeResolve = it.type.resolve().declaration
-            if (typeResolve is KSClassDeclaration && isDataClass(typeResolve)) {
-                file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
-                detectAndGenerateValues(file, typeResolve.primaryConstructor!!.parameters)
-                file.appendText(",\n")
-            } else {
-                val typeName = StringBuilder(
-                    it.type.resolve().declaration.qualifiedName?.asString() ?: "<ERROR>"
-                )
-                file.appendText(generateValueByType(typeName.toString(), name))
-            }
-        }
-        file.appendText(")")
-    }
-
     private fun isDataClass(classDeclaration: KSDeclaration): Boolean {
         return classDeclaration is KSClassDeclaration &&
                 classDeclaration.classKind == ClassKind.CLASS &&
                 classDeclaration.modifiers.contains(Modifier.DATA)
     }
 
+    private fun generateRandomString(): String {
+        val length = Random.nextInt(randomStringMin, randomStringMax) // Adjust the range as needed
+        val chars = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        return (1..length).map { chars.random() }.joinToString("")
+    }
 }
