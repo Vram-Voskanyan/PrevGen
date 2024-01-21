@@ -68,8 +68,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     // Usage from Sonatype
-//    implementation("io.github.vram-voskanyan:PreviewGenerator:0.0.1-SNAPSHOT")
-//    ksp("io.github.vram-voskanyan:PreviewGenerator:0.0.1-SNAPSHOT")
+//    implementation("io.github.vram-voskanyan:PreviewGenerator:0.0.2")
+//    ksp("io.github.vram-voskanyan:PreviewGenerator:0.0.2")
     // Local Usage
     implementation(project(":PreviewGenerator"))
     ksp(project(":PreviewGenerator"))

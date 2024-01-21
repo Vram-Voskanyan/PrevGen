@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.vram-voskanyan"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2"
 
 publishing {
     publications {
@@ -15,9 +15,11 @@ publishing {
 
     repositories {
         maven {
-            // Sonatype Nexus URL
-            // TODO: Add release url, with -SNAPSHOT check
-            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            url = if (!project.version.toString().endsWith("SNAPSHOT")) {
+                uri("https://s01.oss.sonatype.org/content/repositories/releases/")
+            } else {
+                uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            }
             credentials {
                 username = project.findProperty("ossrhUsername").toString()
                 password = project.findProperty("ossrhPassword").toString()
