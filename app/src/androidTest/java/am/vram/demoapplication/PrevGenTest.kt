@@ -4,6 +4,7 @@ import DataPreview
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.Date
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -17,6 +18,7 @@ class ExampleUnitTest {
         println(testClassInnerClass2Preview)
         println(testClassSimplePreview)
         println(testClassListPreview)
+        println(testClassEmptyPreview)
         assertEquals(4, 2 + 2)
     }
 }
@@ -31,6 +33,9 @@ data class TestClassInnerClass1(
     val stringName: List<InnerClass>,
     val innerclass: InnerClass
 )
+
+@DataPreview
+data class TestClassEmpty(val a: Date?)
 
 data class InnerClass(val a: String, val b: Int, val c: List<String>)
 data class InnerClass2(val c: List<InnerClass>)
