@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ExampleUnitTest">
+        <State />
+      </entry>
       <entry key="addition_isCorrect()">
         <State />
       </entry>

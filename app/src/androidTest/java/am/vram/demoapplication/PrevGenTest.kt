@@ -13,7 +13,7 @@ import java.util.Date
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
+    fun testingGeneration() {
         println(testClassInnerClass1Preview)
         println(testClassInnerClass2Preview)
         println(testClassSimplePreview)
@@ -31,7 +31,8 @@ data class TestClassInnerClass2(
 @DataPreview
 data class TestClassInnerClass1(
     val stringName: List<InnerClass>,
-    val innerclass: InnerClass
+    val innerclass: InnerClass,
+    val innerclassDate: InnerClassDate
 )
 
 @DataPreview
@@ -39,6 +40,7 @@ data class TestClassEmpty(val a: Date?)
 
 data class InnerClass(val a: String, val b: Int, val c: List<String>)
 data class InnerClass2(val c: List<InnerClass>)
+data class InnerClassDate(val c: List<Date?>)
 
 @DataPreview
 data class TestClassSimple(
