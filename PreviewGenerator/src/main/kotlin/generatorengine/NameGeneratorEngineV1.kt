@@ -25,46 +25,57 @@ class NameGeneratorEngineV1 : NameGeneratorEngine {
         file.appendText(")")
     }
 
+    // itarator
     private fun getValueAndGeneratePreview(ksValueParameter: KSValueParameter, file: OutputStream) {
         val name = ksValueParameter.name!!.asString()
         val typeResolve = ksValueParameter.type.resolve().declaration
-        // Data class class
-        if (typeResolve is KSClassDeclaration && isDataClass(typeResolve)) {
-            file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
-            generateValues(file, typeResolve.primaryConstructor!!.parameters)
-            file.appendText(",\n")
-        } else {
-            val typeName = StringBuilder(
-                ksValueParameter.type.resolve().declaration.qualifiedName?.asString() ?: "<ERROR>"
-            )
-            // list, in future generic base type
-            if (typeName.toString() == "kotlin.collections.List") {
-                // is generic type a Custom class
-                val typeArgs = ksValueParameter.type.element!!.typeArguments
-                typeArgs.firstOrNull { typeArg ->
-                    val subTypeResolve = typeArg.type?.resolve()?.declaration
-
-                    if (subTypeResolve is KSClassDeclaration && isDataClass(subTypeResolve)) {
-                        file.appendText("\t$name = listOf(\n")
-
-                        repeat(Random.nextInt(1, listElementsMaxCount)) {
-                            file.appendText("${subTypeResolve.simpleName.asString()}(\n")
-                            generateValues(file, subTypeResolve.primaryConstructor!!.parameters)
-                            file.appendText(",\n")
-                        }
-                        file.appendText("),\n")
-                    } else {
-                        file.appendText(
-                            "\t$name = listOf(${generateListItems(ksValueParameter)}),\n"
-                        )
-                    }
-                    false
-                }
-            } else {
-                file.appendText(generateValueByType(ksValueParameter, typeName.toString(), name))
-            }
+        val typeName by lazy { StringBuilder(typeResolve.qualifiedName?.asString() ?: "<ERROR>") }
+        if (!handleClassType(typeResolve, name, file) && !handleListType(typeName, ksValueParameter, name, file)) {
+            file.appendText(generateValueByType(ksValueParameter, typeName.toString(), name))
         }
     }
+
+    // List tipe handler
+    private fun handleListType(
+        typeName: StringBuilder,
+        ksValueParameter: KSValueParameter,
+        name: String,
+        file: OutputStream
+    ): Boolean {
+        if (typeName.toString() != "kotlin.collections.List") return false
+        // is generic type a Custom class
+        val typeArgs = ksValueParameter.type.element!!.typeArguments
+        typeArgs.firstOrNull { typeArg ->
+            val subTypeResolve = typeArg.type?.resolve()?.declaration
+
+            if (subTypeResolve is KSClassDeclaration && isDataClass(subTypeResolve)) {
+                file.appendText("\t$name = listOf(\n")
+
+                repeat(Random.nextInt(1, listElementsMaxCount)) {
+                    file.appendText("${subTypeResolve.simpleName.asString()}(\n")
+                    generateValues(file, subTypeResolve.primaryConstructor!!.parameters)
+                    file.appendText(",\n")
+                }
+                file.appendText("),\n")
+            } else {
+                file.appendText(
+                    "\t$name = listOf(${generateListItems(ksValueParameter)}),\n"
+                )
+            }
+            false
+        }
+        return true
+    }
+
+    private fun handleClassType(typeResolve: KSDeclaration, name: String, file: OutputStream): Boolean {
+        if (!(typeResolve is KSClassDeclaration && isDataClass(typeResolve))) return false
+        file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
+        generateValues(file, typeResolve.primaryConstructor!!.parameters)
+        file.appendText(",\n")
+        return true
+    }
+
+
 
     override fun generateValueByType(
         ksValueParameter: KSValueParameter,
@@ -81,23 +92,18 @@ class NameGeneratorEngineV1 : NameGeneratorEngine {
 
     private fun generateListItems(ksValueParameter: KSValueParameter): String {
         val type = getGenericValueByType(ksValueParameter)
-        var result = ""
-        when (type) {
-            "kotlin.String" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
-                result+="\"${generateString("")}\",\n"
-            }
-            "kotlin.Int" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
-                result+="${generateInt("")},\n"
-            }
-            "kotlin.Boolean" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
-                result+= "${generateBoolean("")},\n"
-            }
-            "kotlin.Long" -> repeat(Random.nextInt(1, listElementsMaxCount)) {
-                result+="${generateLong("")},\n"
-            }
+        val repeater: (() -> String) -> String = { generator ->
+            var result = ""
+            repeat(Random.nextInt(1, listElementsMaxCount)) { result+=generator() }
+            result
+        }
+        return when (type) {
+            "kotlin.String" -> repeater { "\"${generateString("")}\",\n" }
+            "kotlin.Int" -> repeater { "${generateInt("")},\n" }
+            "kotlin.Boolean" -> repeater { "${generateBoolean("")},\n" }
+            "kotlin.Long" -> repeater { "${generateLong("")},\n" }
             else -> "\nnull\n"
         }
-        return result
     }
 
     private fun getGenericValueByType(ksValueParameter: KSValueParameter): String {
