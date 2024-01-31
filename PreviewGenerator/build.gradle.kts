@@ -1,17 +1,14 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
-    kotlin("jvm")
+    kotlin("multiplatform")
     id("maven-publish")
 }
 
-group = "io.github.vram-voskanyan"
-version = "0.0.3"
+group = "io.github.vram-voskanyan.kmp"
+version = "0.0.2"
 
 publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
 
     repositories {
         maven {
@@ -28,11 +25,15 @@ publishing {
     }
 }
 
-dependencies {
-    implementation(kotlin("stdlib"))
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
-}
-
-sourceSets.main {
-    java.srcDirs("src/main/kotlin")
+kotlin {
+    jvm()
+    sourceSets {
+        val jvmMain by getting {
+            dependencies {
+                implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
+            }
+            kotlin.srcDir("src/main/kotlin")
+            resources.srcDir("src/main/resources")
+        }
+    }
 }
