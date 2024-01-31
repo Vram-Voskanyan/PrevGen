@@ -35,8 +35,8 @@ Kotlin PreviewGenerator is a lightweight compiler plugin written with Kotlin Sym
 
     ```gradle
     dependencies {
-        implementation("io.github.vram-voskanyan:PreviewGenerator:0.0.1-SNAPSHOT")
-        ksp("io.github.vram-voskanyan:PreviewGenerator:0.0.1-SNAPSHOT")
+        implementation("io.github.vram-voskanyan.kmp:PreviewGenerator:0.0.2")
+        ksp("io.github.vram-voskanyan.kmp:PreviewGenerator:0.0.2")
     }
     ```
 
