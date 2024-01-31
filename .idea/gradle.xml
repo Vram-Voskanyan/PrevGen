@@ -11,6 +11,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/PreviewGenerator" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/kmp" />
+            <option value="$PROJECT_DIR$/kmp/androidApp" />
+            <option value="$PROJECT_DIR$/kmp/shared" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

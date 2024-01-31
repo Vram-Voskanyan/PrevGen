@@ -8,6 +8,9 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="kmp.androidApp">
+        <State />
+      </entry>
       <entry key="testingGeneration()">
         <State />
       </entry>

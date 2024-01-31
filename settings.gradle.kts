@@ -18,3 +18,5 @@ dependencyResolutionManagement {
 rootProject.name = "Demo Application"
 include(":app")
 include(":PreviewGenerator")
+include(":kmp:androidApp")
+include(":kmp:shared")
