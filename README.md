@@ -27,7 +27,7 @@ Kotlin PreviewGenerator is a lightweight compiler plugin written with Kotlin Sym
     ```gradle
     repositories {
         // ...
-        maven("https://s01.oss.sonatype.org/content/repositories/releases/")
+        mavenCentral()
     }
     ```
 
