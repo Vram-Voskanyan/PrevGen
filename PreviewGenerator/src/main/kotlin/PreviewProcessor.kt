@@ -43,7 +43,9 @@ class PreviewProcessor(
                 packageName,
                 className
             )
-            file.appendText("package $packageName\n\n")
+            if (packageName.isNotBlank()) {
+                file.appendText("package $packageName\n")
+            }
             file.appendText("val ${className.replaceFirstChar { className.lowercase()[0] }}Preview = $className(\n")
             generatorEngine.generateValues(file, function.parameters)
             file.close()

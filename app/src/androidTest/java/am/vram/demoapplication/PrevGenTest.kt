@@ -19,6 +19,7 @@ class ExampleUnitTest {
         println(testClassSimplePreview)
         println(testClassListPreview)
         println(testClassEmptyPreview)
+        println(nonDataClassPreview.name)
         assertEquals(4, 2 + 2)
     }
 }
@@ -57,3 +58,10 @@ data class TestClassList(
     val boolean: List<Boolean>,
     val longDate: List<Long>,
 )
+
+@DataPreview
+class NonDataClass(val name: String)
+@DataPreview
+class NonDataClassEmpty()
+@DataPreview
+fun nonDataFun() = false

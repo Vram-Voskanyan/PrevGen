@@ -1,21 +1,14 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-//    kotlin("jvm")
     kotlin("multiplatform")
     id("maven-publish")
-    id("com.android.library")
 }
 
-group = "io.github.vram-voskanyan"
-version = "0.0.4.1-SNAPSHOT"
+group = "io.github.vram-voskanyan.kmp"
+version = "0.0.2"
 
 publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["kotlin"])
-        }
-    }
 
     repositories {
         maven {
@@ -34,27 +27,6 @@ publishing {
 
 kotlin {
     jvm()
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-        publishLibraryVariantsGroupedByFlavor = true
-    }
-
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
-
-    iosTarget("ios") {}
-
-//    cocoapods {
-//        summary = "Some description for the Shared Module"
-//        homepage = "Link to the Shared Module homepage"
-//        ios.deploymentTarget = "14.1"
-//        frameworkName = "shared"
-//        podfile = project.file("../iosApp/Podfile")
-//    }
-
     sourceSets {
         val jvmMain by getting {
             dependencies {
@@ -65,12 +37,3 @@ kotlin {
         }
     }
 }
-
-//dependencies {
-//    implementation(kotlin("stdlib"))
-//    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
-//}
-//
-//sourceSets.main {
-//    java.srcDirs("src/main/kotlin")
-//}
