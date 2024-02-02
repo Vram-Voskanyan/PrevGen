@@ -1,13 +1,15 @@
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.vram-voskanyan.kmp/PreviewGenerator)](https://central.sonatype.com/artifact/io.github.vram-voskanyan.kmp/PreviewGenerator)
+
 # Kotlin PreviewGenerator (PrevGen)
 
-Kotlin PreviewGenerator is a lightweight compiler plugin written with Kotlin Symbol Processing (KSP). Preview Generator creates preview instances for data classes, which can be used in Jetpack Compose view previews.
+Kotlin PreviewGenerator is a lightweight compiler plugin writ ten with Kotlin Symbol Processing (KSP). Preview Generator creates preview instances for data classes, which can be used in Jetpack Compose view previews.
 
 ## Navigation
 - [Setup](#setup)
 - [Usage](#usage)
 - [Examples](#examples)
 - [Roadmap](#ongoing-and-future-works)
-- [Feedback and contact us](#)
+- [Feedback and contact us](#contact-author)
 - [License](#license)
 - [Contribute](#contributing)
 
@@ -35,8 +37,8 @@ Kotlin PreviewGenerator is a lightweight compiler plugin written with Kotlin Sym
 
     ```gradle
     dependencies {
-        implementation("io.github.vram-voskanyan.kmp:PreviewGenerator:0.0.2")
-        ksp("io.github.vram-voskanyan.kmp:PreviewGenerator:0.0.2")
+        implementation("io.github.vram-voskanyan.kmp:PreviewGenerator:1.0.0") // take latest from Maven central
+        ksp("io.github.vram-voskanyan.kmp:PreviewGenerator:1.0.0")
     }
     ```
 
@@ -59,8 +61,22 @@ val previewValue = dummyClassPreview
 // Note: `loginDate` is a Timestamp ;)
 ```
 
+## Do Not Do This
+These are examples that will not work:
+```kotlin
+    class A(items: List<A>)
+```
+In this case, it will attempt to create an endless items.
+```kotlin
+    data class B(enumItem: EnumValue)
+```
+Currently, enums and sealed classes are not supported. Make the type nullable in this case:
+```kotlin
+    data class B(enumItem: EnumValue?)
+```
+
 ### Example for Jetpack Compose
-TODO: soon ;)
+Medium url... ;) soon
 
 ## Ongoing and Future Works
 
@@ -72,10 +88,11 @@ We also have some exciting features in mind for implementation, depending on com
 
 2. **Flexible Data Generation:** Currently, the generator relies on an argument name-checker to pick values close to the parameter type. For the next step, we aim to provide an option to pass values from outside, allowing customization such as non-English values.
 
-## Contact Author 
+3. **Adding caching functionality:** Actually, the script is already fast, but there are plans to implement caching for pregenerated data. ;)
 
-- (email)[vram.arm@gmail.com]
-- (Linkedin)[https://www.linkedin.com/in/vram-voskanyan-146b6198/]
+## Contact Author 
+- **Email:** [vram.arm@gmail.com](mailto:vram.arm@gmail.com)
+- **LinkedIn:** [Vram Voskanyan](https://www.linkedin.com/in/vram-voskanyan-146b6198/)
 
 ## License
 
