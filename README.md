@@ -76,7 +76,7 @@ Currently, enums and sealed classes are not supported. Make the type nullable in
 ```
 
 ### Example for Jetpack Compose
-Medium url... ;) soon
+[Medium Demo](https://medium.com/picsart-engineering/preview-jetpack-compose-views-in-seconds-previewgenerator-lib-59a7520085dd)
 
 ## Ongoing and Future Works
 
