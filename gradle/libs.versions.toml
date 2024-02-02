@@ -6,6 +6,7 @@ compose-compiler = "1.5.6"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 ksp = "1.9.21-1.0.15"
+symbolProcessingApi = "1.9.21-1.0.15"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -15,6 +16,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

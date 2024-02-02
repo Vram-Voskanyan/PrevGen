@@ -33,7 +33,9 @@ data class TestClassInnerClass2(
 data class TestClassInnerClass1(
     val stringName: List<InnerClass>,
     val innerclass: InnerClass,
-    val innerclassDate: InnerClassDate
+    val innerclassDate: InnerClassDate,
+    val address: String,
+    val text: String
 )
 
 @DataPreview

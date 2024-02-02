@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidLibrary.get().pluginId)
@@ -12,15 +14,16 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-            isStatic = true
+    if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+        listOf(
+            iosX64(),
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach {
+            it.binaries.framework {
+                baseName = "shared"
+                isStatic = true
+            }
         }
     }
 

@@ -5,8 +5,10 @@
  */
 package generatorengine
 
+import generatorengine.samples.addresses
 import generatorengine.samples.dateTimeValues
 import generatorengine.samples.firstNamesValues
+import generatorengine.samples.notifications
 import generatorengine.samples.statusValues
 import generatorengine.samples.surnamesValues
 import generatorengine.samples.userNamesValues
@@ -18,6 +20,8 @@ internal val ageKeys = setOf("age", "old")
 private val userNameKeys = setOf("user", "id")
 private val surnameKeys = setOf("surname")
 private val nameKeys = setOf("name")
+private val addressesKeys = setOf("address", "location")
+private val notificationKeys = setOf("notification", "message", "text")
 
 private val statusKeys = setOf("type", "state", "status")
 
@@ -26,7 +30,9 @@ internal val stringList = listOf(
     userNameKeys to userNamesValues,
     surnameKeys to surnamesValues,
     nameKeys to firstNamesValues,
-    statusKeys to statusValues
+    statusKeys to statusValues,
+    addressesKeys to addresses,
+    notificationKeys to notifications
 )
 
 

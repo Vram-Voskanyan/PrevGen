@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.vram-voskanyan.kmp"
-version = "0.0.2"
+version = "1.0.0"
 
 publishing {
 
@@ -28,7 +28,7 @@ kotlin {
     sourceSets {
         val jvmMain by getting {
             dependencies {
-                implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
+                implementation(libs.symbol.processing.api)
             }
             kotlin.srcDir("src/main/kotlin")
             resources.srcDir("src/main/resources")
