@@ -13,7 +13,7 @@ import generatorengine.samples.statusValues
 import generatorengine.samples.surnamesValues
 import generatorengine.samples.userNamesValues
 
-internal val dateKeys = setOf("date", "time", "timestamp")
+internal val dateKeys = setOf("date", "time", "timestamp", "publishedAt", "createdAt", "updatedAt")
 
 internal val ageKeys = setOf("age", "old")
 
@@ -21,9 +21,9 @@ private val userNameKeys = setOf("user", "id")
 private val surnameKeys = setOf("surname")
 private val nameKeys = setOf("name")
 private val addressesKeys = setOf("address", "location")
-private val notificationKeys = setOf("notification", "message", "text")
+private val notificationKeys = setOf("notification", "message", "text", "description")
 
-private val statusKeys = setOf("type", "state", "status")
+private val statusKeys = setOf("type", "state", "status", "title")
 
 internal val stringList = listOf(
     dateKeys to dateTimeValues,
