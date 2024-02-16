@@ -100,6 +100,7 @@ class NameGeneratorEngineV1(private val typeGenerators: TypeGenerators) : NameGe
             "kotlin.Int" -> "${typeGenerators.generateInt(key)}"
             "kotlin.Boolean" -> "${typeGenerators.generateBoolean(key)}"
             "kotlin.Long" -> "${typeGenerators.generateLong(key)}"
+            "kotlin.Double" -> "${typeGenerators.generateDouble(key)}"
             else -> "null"
         } + ",\n"
     }
@@ -116,6 +117,7 @@ class NameGeneratorEngineV1(private val typeGenerators: TypeGenerators) : NameGe
             "kotlin.Int" -> repeater { "${typeGenerators.generateInt("")},\n" }
             "kotlin.Boolean" -> repeater { "${typeGenerators.generateBoolean("")},\n" }
             "kotlin.Long" -> repeater { "${typeGenerators.generateLong("")},\n" }
+            "kotlin.Double" -> repeater { "${typeGenerators.generateDouble("")},\n" }
             else -> "\nnull\n"
         }
     }

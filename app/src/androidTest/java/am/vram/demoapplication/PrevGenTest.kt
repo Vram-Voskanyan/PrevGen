@@ -35,13 +35,14 @@ data class TestClassInnerClass1(
     val innerclass: InnerClass,
     val innerclassDate: InnerClassDate,
     val address: String,
-    val text: String
+    val text: String,
+    val price: Double
 )
 
 @DataPreview
 data class TestClassEmpty(val a: Date?)
 
-data class InnerClass(val a: String, val b: Int, val c: List<String>)
+data class InnerClass(val a: String, val b: Int, val c: List<String>, val doubleList: List<Double>)
 data class InnerClass2(val c: List<InnerClass>)
 data class InnerClassDate(val c: List<Date?>)
 

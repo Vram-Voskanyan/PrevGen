@@ -10,4 +10,5 @@ interface TypeGenerators {
     fun generateString(key: String): String
     fun generateBoolean(key: String): Boolean
     fun generateInt(key: String): Int
+    fun generateDouble(key: String): Double
 }
