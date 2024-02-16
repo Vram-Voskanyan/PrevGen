@@ -10,13 +10,16 @@ import generatorengine.ageKeys
 import generatorengine.dateKeys
 import generatorengine.stringList
 import kotlin.random.Random
-class TypeGeneratorsV1: TypeGenerators {
+
+class TypeGeneratorsV1 : TypeGenerators {
 
     private val longMaxRange: Long = 10000
     private val randomStringMin = 4
     private val randomStringMax = 10
     private val randomIntMin = 100
+    private val randomDoubleMin = 100.0
     private val randomIntMax = 1000
+    private val randomDoubleMax = 10000.0
 
     override fun generateLong(key: String): Long {
         if (check(dateKeys, key.lowercase())) {
@@ -48,6 +51,9 @@ class TypeGeneratorsV1: TypeGenerators {
         } else {
             Random.nextInt(randomIntMin, randomIntMax)
         }
+
+    override fun generateDouble(key: String): Double =
+        String.format("%.2f", Random.nextDouble(randomDoubleMin, randomDoubleMax)).toDouble()
 
     private fun check(fingerprintTypes: Set<String>, fingerprint: String): Boolean {
         fingerprintTypes.forEach { if (fingerprint.contains(it)) return true }
