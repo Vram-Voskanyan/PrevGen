@@ -6,9 +6,8 @@
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
 import com.google.devtools.ksp.validate
+import generatorengine.initNameGeneratorByType
 import generatorengine.samples.NameGeneratorEngine
-import generatorengine.v1.NameGeneratorEngineV1
-import generatorengine.v1.TypeGeneratorsV1
 import java.io.OutputStream
 
 fun OutputStream.appendText(str: String) {
@@ -58,6 +57,7 @@ class PreviewProcessorProvider : SymbolProcessorProvider {
     override fun create(
         environment: SymbolProcessorEnvironment
     ): SymbolProcessor {
-        return PreviewProcessor(environment.codeGenerator, NameGeneratorEngineV1(TypeGeneratorsV1()))
+        val nameGeneratorEngine = initNameGeneratorByType(environment.options)
+        return PreviewProcessor(environment.codeGenerator, nameGeneratorEngine)
     }
 }

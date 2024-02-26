@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PreviewGenerator-jvm-0.0.2">
+    <output-path>$PROJECT_DIR$/PreviewGenerator/build/libs</output-path>
+    <root id="archive" name="PreviewGenerator-jvm-0.0.2.jar">
+      <element id="module-output" name="Demo_Application.PreviewGenerator.jvmMain" />
+    </root>
+  </artifact>
+</component>

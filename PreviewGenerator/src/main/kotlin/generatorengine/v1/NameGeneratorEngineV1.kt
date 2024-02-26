@@ -16,9 +16,10 @@ import generatorengine.TypeGenerators
 import java.io.OutputStream
 import kotlin.random.Random
 
-class NameGeneratorEngineV1(private val typeGenerators: TypeGenerators) : NameGeneratorEngine {
-    // can be added extra config for future. if needed huge data to test.
-    private val listElementsMaxCount = 5
+class NameGeneratorEngineV1(
+    private val typeGenerators: TypeGenerators,
+    private val listElementsMaxCount: Int = 5
+) : NameGeneratorEngine {
 
     override fun generateValues(file: OutputStream, parameters: List<KSValueParameter>) {
         parameters.forEach {
