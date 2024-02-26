@@ -12,6 +12,7 @@ Kotlin PreviewGenerator is a lightweight compiler plugin writ ten with Kotlin Sy
 - [Feedback and contact us](#contact-author)
 - [License](#license)
 - [Contribute](#contributing)
+- [Configurations](configuration.md)
 
 ## Setup
 
@@ -74,6 +75,8 @@ Currently, enums and sealed classes are not supported. Make the type nullable in
 ```kotlin
     data class B(enumItem: EnumValue?)
 ```
+
+For more configurations and setups, please refer here: [Configurations.md](configuration.md)
 
 ### Example for Jetpack Compose
 [Medium Demo](https://medium.com/picsart-engineering/preview-jetpack-compose-views-in-seconds-previewgenerator-lib-59a7520085dd)
