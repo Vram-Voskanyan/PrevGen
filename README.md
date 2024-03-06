@@ -1,4 +1,5 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.vram-voskanyan.kmp/PreviewGenerator)](https://central.sonatype.com/artifact/io.github.vram-voskanyan.kmp/PreviewGenerator)
+<a href="https://jetc.dev/issues/201.html"><img src="https://img.shields.io/badge/As_Seen_In-jetc.dev_Newsletter_Issue_%23201-blue?logo=Jetpack+Compose&amp;logoColor=white" alt="As Seen In - jetc.dev Newsletter Issue #201"></a>
 
 # Kotlin PreviewGenerator (PrevGen)
 
