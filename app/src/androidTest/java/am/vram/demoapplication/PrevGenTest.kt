@@ -40,7 +40,7 @@ data class TestClassInnerClass1(
 )
 
 @DataPreview
-data class TestClassEmpty(val a: Date?)
+data class TestClassEmpty(val age: Int, val a: Date?)
 
 data class InnerClass(val a: String, val b: Int, val c: List<String>, val doubleList: List<Double>)
 data class InnerClass2(val c: List<InnerClass>)

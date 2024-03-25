@@ -76,5 +76,5 @@ dependencies {
 }
 
 ksp {
-    arg("prevgen.type", "PREDICTABLE_MODE")
+    arg("prevgen.mode", "PREDICTABLE_MODE")
 }
