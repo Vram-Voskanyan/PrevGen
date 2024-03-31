@@ -1,6 +1,7 @@
 package am.vram.demoapplication
 
 import DataPreview
+import am.vram.demoapplication.a.classFromPackageAPreview
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,6 +15,7 @@ import java.util.Date
 class ExampleUnitTest {
     @Test
     fun testingGeneration() {
+        println(classFromPackageAPreview)
         println(testClassInnerClass1Preview)
         println(testClassInnerClass2Preview)
         println(testClassSimplePreview)

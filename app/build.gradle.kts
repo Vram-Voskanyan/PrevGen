@@ -75,6 +75,4 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
-ksp {
-    arg("prevgen.mode", "PREDICTABLE_MODE")
-}
+//ksp { arg("prevgen.mode", "PREDICTABLE_MODE") }
