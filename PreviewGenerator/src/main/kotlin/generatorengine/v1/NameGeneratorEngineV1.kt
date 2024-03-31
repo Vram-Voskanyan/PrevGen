@@ -53,7 +53,7 @@ class NameGeneratorEngineV1(
         file: OutputStream
     ): Boolean {
         if (!(typeResolve is KSClassDeclaration && isDataClass(typeResolve))) return false
-        file.appendText("$name = ${typeResolve.simpleName.asString()}(\n")
+        file.appendText("$name = ${typeResolve.qualifiedName!!.asString()}(\n")
         generateValues(file, typeResolve.primaryConstructor!!.parameters)
         file.appendText(",\n")
         return true
